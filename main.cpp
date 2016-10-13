@@ -97,7 +97,5 @@ int main(int argc, char** argv)
     
     delete[] vecData;
     
-    
-    
     return 0;
 }
