@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Vec.o \
 	${OBJECTDIR}/example.o \
 	${OBJECTDIR}/main.o
 
@@ -63,15 +64,20 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/vec2graph: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/vec2graph ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/Vec.o: Vec.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/local/hdf5/include -I/usr/local/include -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Vec.o Vec.cpp
+
 ${OBJECTDIR}/example.o: example.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/hdf5/include -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example.o example.cpp
+	$(COMPILE.cc) -g -I/usr/local/hdf5/include -I/usr/local/include -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/example.o example.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/hdf5/include -I/usr/local/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I/usr/local/hdf5/include -I/usr/local/include -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

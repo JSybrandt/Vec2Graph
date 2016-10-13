@@ -4,6 +4,8 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Vec.h</itemPath>
+      <itemPath>VecDistance.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -16,6 +18,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Vec.cpp</itemPath>
       <itemPath>example.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -48,6 +51,7 @@
           <incDir>
             <pElem>/usr/local/hdf5/include</pElem>
             <pElem>/usr/local/include</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
@@ -71,6 +75,12 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Vec.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vec.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VecDistance.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="data/dataset.hdf5" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/vectors0" ex="false" tool="3" flavor2="0">
@@ -101,6 +111,12 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Vec.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vec.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VecDistance.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="data/dataset.hdf5" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/vectors0" ex="false" tool="3" flavor2="0">
