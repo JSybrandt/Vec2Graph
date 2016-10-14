@@ -24,7 +24,6 @@ void loadVecs(map<string,Vec> & pmid2vec){
         
     for(int i = 0; i < NUM_VEC_FILES; i++){
         string filePath = VECTOR_DIR + "/vectors" + to_string(i);
-        cout << "Processing " << filePath << endl;
         fstream fin(filePath,ios::in);
         string line;
         while(getline(fin,line)){
@@ -49,7 +48,7 @@ void loadVecs(map<string,Vec> & pmid2vec){
                     }
                 }
                 catch(...){
-                    cerr << "FOUND FAILED VEC" << endl;
+                    //DO NOTHING
                 }
             }
         }      
@@ -63,16 +62,13 @@ int main(int argc, char** argv)
     map<string,Vec> pmid2vec;
     
     
-    cout<<"Load Vecs"<<endl;
     loadVecs(pmid2vec);
     
-    
-    cout<<"Ask for " << pmid2vec.size() << "X" << VECTOR_SIZE << " array" <<endl;
     //row major order, map.size() rows and VECTOR_SIZE cols
     float * vecData = new float[pmid2vec.size()*VECTOR_SIZE];
     
     
-    cout<<"Fill Array" << endl;
+    //cout<<"Fill Array" << endl;
     vector<string> pmids;
     int pmidCount = 0;
     for(auto val : pmid2vec){
@@ -83,11 +79,11 @@ int main(int argc, char** argv)
         pmidCount++;
     }
     
-    cout<<"Make FLANN Array" << endl;
+    //cout<<"Make FLANN Array" << endl;
     
     flann::Matrix<float> data(vecData,pmid2vec.size(),VECTOR_SIZE);
       
-    cout << "Make Index" << endl; 
+    //cout << "Make Index" << endl; 
     flann::Index<flann::L2<float> > index(data, flann::KDTreeIndexParams(16));
     index.buildIndex();
     
@@ -97,15 +93,16 @@ int main(int argc, char** argv)
     flann::SearchParams params(128);
     params.cores = 0; //automatic core selection
     index.knnSearch(data, indicies, dists, 10, params);
-    
-
+ 
     for(int currIndex = 0; currIndex < indicies.size(); ++currIndex){
         string pmid = pmids[currIndex];
         for(int nIndex = 0; nIndex < indicies[currIndex].size(); ++nIndex){
             int neighborID = indicies[currIndex][nIndex];
             string nPMID = pmids[neighborID];
             
-            cout<<pmid << "\t" << nPMID << "\t" <<dists[currIndex][nIndex]<< endl;
+            float pairDist = dists[currIndex][nIndex];
+            
+            cout<<pmid << " " << nPMID << " " <<pairDist<< endl;
         }
     }
     
