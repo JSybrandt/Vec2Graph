@@ -38,7 +38,14 @@ void loadVecs(map<string,Vec> & pmid2vec){
                     float t;
                     while(s >> t) data.push_back(t);
                     Vec vec(data);
-
+                    double mag = vec.magnitude();
+                    if(mag != 0){
+                        vec /= vec.magnitude();
+                    }else{
+                        //DO NOTHING
+                        //SKIPPING ZERO VECTOR
+                        continue;
+                    }
                     //if we need to merge
                     if(pmid2vec.find(pmid) != pmid2vec.end()){
                         pmid2vec[pmid] += vec;
@@ -49,6 +56,7 @@ void loadVecs(map<string,Vec> & pmid2vec){
                 }
                 catch(...){
                     //DO NOTHING
+                    //SKIPPING NAN VECTOR
                 }
             }
         }      
@@ -84,7 +92,8 @@ int main(int argc, char** argv)
     flann::Matrix<float> data(vecData,pmid2vec.size(),VECTOR_SIZE);
       
     //cout << "Make Index" << endl; 
-    flann::Index<flann::L2<float> > index(data, flann::KDTreeIndexParams(16));
+    //flann::Index<flann::L2<float> > index(data, flann::KDTreeIndexParams(16));
+    flann::Index<VecDistance<float> > index(data, flann::KDTreeIndexParams(16));
     index.buildIndex();
     
     vector<vector<int> > indicies;
