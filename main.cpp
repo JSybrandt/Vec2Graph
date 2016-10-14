@@ -86,14 +86,28 @@ int main(int argc, char** argv)
     cout<<"Make FLANN Array" << endl;
     
     flann::Matrix<float> data(vecData,pmid2vec.size(),VECTOR_SIZE);
-    flann::SearchParams params(128);
-    params.cores = 0; //automatic core selection
-    
-    
+      
     cout << "Make Index" << endl; 
     flann::Index<flann::L2<float> > index(data, flann::KDTreeIndexParams(16));
     index.buildIndex();
     
+    vector<vector<int> > indicies;
+    vector<vector<float> > dists;
+    
+    flann::SearchParams params(128);
+    params.cores = 0; //automatic core selection
+    index.knnSearch(data, indicies, dists, 10, params);
+    
+
+    for(int currIndex = 0; currIndex < indicies.size(); ++currIndex){
+        string pmid = pmids[currIndex];
+        for(int nIndex = 0; nIndex < indicies[currIndex].size(); ++nIndex){
+            int neighborID = indicies[currIndex][nIndex];
+            string nPMID = pmids[neighborID];
+            
+            cout<<pmid << "\t" << nPMID << "\t" <<dists[currIndex][nIndex]<< endl;
+        }
+    }
     
     delete[] vecData;
     
